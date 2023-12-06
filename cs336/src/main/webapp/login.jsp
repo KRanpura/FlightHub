@@ -21,7 +21,7 @@
     <div>
         <h2>Welcome to FlightHub! Login or Sign Up Below.</h2>
         <form action="checkLogin.jsp" method="POST">
-            Username: <input type="text" name="username"/> <br/>
+            Email: <input type="text" name="email"/> <br/>
             Password: <input type="password" name="password"/> <br/>
             <p>I am a:</p>
     		<label>

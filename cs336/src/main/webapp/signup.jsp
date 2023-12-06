@@ -22,11 +22,12 @@
 	<div>
 		<h2>FlightHub Sign-up</h2>
 		<form action="makeAccount.jsp" method="POST">
+			Email: <input type= "text" name = "email"/> <br/>
 			First name: <input type = "text" name = "first"/> <br/>
 			Last name: <input type = "text" name = "last"/> <br/>
-			Email: <input type= "text" name = "email"/> <br/>
             Username: <input type="text" name="username"/> <br/>
             Password: <input type="password" name="password"/> <br/>
+            Phone (optional): <input type="text", name = "phone"/> <br/>
             <p>I am a:</p>
     		<label>
         		<input type="radio" name="role" value="customer"> Customer <br/>
@@ -43,7 +44,18 @@
 			    <input type="submit" value="Make my account"> <br/>
 			</p>
         </form>
-	</div>
+<%
+    String emailErrorMessage = (String) request.getAttribute("emailErrorMessage");
 
+    if (emailErrorMessage != null && !emailErrorMessage.isEmpty()) 
+    {
+	  %>
+        <div class="error-message">
+            <p><strong>Error:</strong> <%= emailErrorMessage %></p>
+        </div>
+	  <%
+    }
+%>
+	</div>
 </body>
 </html>
