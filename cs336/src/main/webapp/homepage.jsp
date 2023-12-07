@@ -65,9 +65,7 @@
         	} else if (role.equals("admin")) {
         %>
              <nav>
-            	<a href="modifyFlights.jsp">Modify Flight Info</a>
-     	        <a href="modifyAirlines.jsp">Modify Airline Info</a>
-     	        <a href="modifyAirports.jsp">Modify Airport Info</a>
+     	        <a href="modInfo.jsp">Modify Site Info</a>
      	        <a href="removeUser.jsp"> Delete Users</a>
             	<a href="reservations.jsp"> View Reservations</a>
                 <a href="revenue.jsp"> View Revenue</a>
