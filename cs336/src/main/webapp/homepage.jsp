@@ -66,7 +66,7 @@
         %>
              <nav>
      	        <a href="modInfo.jsp">Modify Site Info</a>
-     	        <a href="removeUser.jsp"> Delete Users</a>
+     	        <a href="viewUsers.jsp"> View FlightHub Accounts</a>
             	<a href="reservations.jsp"> View Reservations</a>
                 <a href="revenue.jsp"> View Revenue</a>
             	<a href="logout.jsp">Log out</a>
