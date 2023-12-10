@@ -42,17 +42,7 @@
         		
         pst.executeUpdate();
         session.setAttribute("user", userid); 
-    	if (role.equals("customer"))
-    	{
-    		response.sendRedirect("customer_homepage.jsp");
-    	}
-    	else if (role.equals("rep"))
-    	{
-    		response.sendRedirect("rep_homepage.jsp");
-    	}
-    	else if (role.equals("admin"))
-    	{
-    		response.sendRedirect("admin_homepage.jsp");
-    	}
+        session.setAttribute("role", role);
+        response.sendRedirect("homepage.jsp");
     }
 %>
