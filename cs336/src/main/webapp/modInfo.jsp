@@ -57,28 +57,36 @@
 	    <div class="form">
 	        <h2>Modify Airport Info</h2>
 	        <form action="handleModInfo.jsp" method="POST">
-	            Airport ID: <input type="text" name="airport_id" /> <br />
-	            Airport name: <input type="text" name="airport_name" /> <br />
+	            Airport ID: <input type="text" name="airport_id" required /> <br />
+	            Airport name: <input type="text" name="airport_name" required/> <br />
 	            <p>I would like to:</p>
 	            <label>
-	                <input type="radio" name="mod" value="add" /> Add Airport <br />
+	                <input type="radio" name="modPort" value="add" required/> Add Airport <br />
 	            </label>
 	            <label>
-	                <input type="radio" name="mod" value="remove" /> Remove Airport <br />
+	                <input type="radio" name="modPort" value="remove" /> Remove Airport <br />
 	            </label>
 	            <label>
-	                <input type="radio" name="mod" value="update" /> Update Airport Name <br />
+	                <input type="radio" name="modPort" value="update" /> Update Airport Name <br />
 	            </label>
 	            <p>
-	                <input type="submit" value="Execute modification" /> <br />
+	                <input type="submit" name= "airport" value="Execute modification" /> <br />
 	            </p>
 	        </form>
 	        <%
-	            String errorMessage = (String) request.getAttribute("modErrorMessage");
-	            if (errorMessage != null && !errorMessage.isEmpty()) {
+	        	String success0 = (String) request.getAttribute("successAirport");
+	            String error0 = (String) request.getAttribute("errorAirport");
+	            if (error0 != null && !error0.isEmpty()) {
 	        %>
 	            <div class="error-message">
-	                <p><strong>Error:</strong> <%= errorMessage %></p>
+	                <p><strong>Error:</strong> <%= error0 %></p>
+	            </div>
+	        <%
+	            }
+	            if (success0 != null && !success0.isEmpty()) {
+	        %>
+	        	<div class="success-message">
+	                <p><strong>Success:</strong> <%= success0 %></p>
 	            </div>
 	        <%
 	            }
@@ -88,24 +96,25 @@
 	    <div class="form">
 	        <h2>Modify Airline Info</h2>
 	        <form action="handleModInfo.jsp" method="POST">
-	            Airline ID: <input type="text" name="airline_id" /> <br />
-	            Airline name: <input type="text" name="airline_name" /> <br />
+	            Airline ID: <input type="text" name="airline_id" required/> <br />
+	            Airline name: <input type="text" name="airline_name" required/> <br />
 	            <p>I would like to:</p>
 	            <label>
-	                <input type="radio" name="mod" value="add" /> Add Airline<br />
+	                <input type="radio" name="modLine" value="add" required/> Add Airline<br />
 	            </label>
 	            <label>
-	                <input type="radio" name="mod" value="remove" /> Remove Airline <br />
+	                <input type="radio" name="modLine" value="remove" /> Remove Airline <br />
 	            </label>
 	            <label>
-	                <input type="radio" name="mod" value="update" /> Update Airline Name <br />
+	                <input type="radio" name="modLine" value="update" /> Update Airline Name <br />
 	            </label>
 	            <p>
-	                <input type="submit" value="Execute modification" /> <br />
+	                <input type="submit" name = "airline" value="Execute modification" /> <br />
 	            </p>
 	        </form>
 	        <%
-	            String error = (String) request.getAttribute("modErrorMessage");
+	        	String success = (String) request.getAttribute("successAirline");
+	            String error = (String) request.getAttribute("errorAirline");
 	            if (error != null && !error.isEmpty()) {
 	        %>
 	            <div class="error-message">
@@ -113,37 +122,53 @@
 	            </div>
 	        <%
 	            }
+	            if (success != null && !success.isEmpty()) {
 	        %>
+	        	<div class="success-message">
+	                <p><strong>Success:</strong> <%= success %></p>
+	            </div>
+	        <%
+	            }
+	        %>
+	        
 	    </div>
 	
 	    <div class="form">
 	        <h2>Modify Aircraft Info</h2>
 	        <form action="handleModInfo.jsp" method="POST">
-	            Aircraft ID: <input type="text" name="aircraft_id" /> <br />
-	            Aircraft name: <input type="text" name="aircraft_name" /> <br />
-	            Airline ID: <input type="text" name="airline_id" /> <br />
+	            Aircraft ID: <input type="text" name="aircraft_id" required/> <br />
+	            Aircraft name: <input type="text" name="aircraft_name" required/> <br />
+	            Airline ID: <input type="text" name="airline_id" required/> <br />
 	            Capacity: <input type="text" name="capacity" /> <br />
 	            
 	            <p>I would like to:</p>
 	            <label>
-	                <input type="radio" name="mod" value="add" /> Add Aircraft<br />
+	                <input type="radio" name="modCraft" value="add" required/> Add Aircraft<br />
 	            </label>
 	            <label>
-	                <input type="radio" name="mod" value="remove" /> Remove Aircraft <br />
+	                <input type="radio" name="modCraft" value="remove" /> Remove Aircraft <br />
 	            </label>
 	            <label>
-	                <input type="radio" name="mod" value="update" /> Update Aircraft Info <br />
+	                <input type="radio" name="modCraft" value="update" /> Update Aircraft Info <br />
 	            </label>
 	            <p>
-	                <input type="submit" value="Execute modification" /> <br />
+	                <input type="submit" name = "aircraft" value="Execute modification" /> <br />
 	            </p>
 	        </form>
 	        <%
-	            String err = (String) request.getAttribute("modErrorMessage");
-	            if (err != null && !err.isEmpty()) {
+	        	String success2 = (String) request.getAttribute("successAircraft");
+	            String error2 = (String) request.getAttribute("errorAircraft");
+	            if (error2 != null && !error2.isEmpty()) {
 	        %>
 	            <div class="error-message">
-	                <p><strong>Error:</strong> <%= err %></p>
+	                <p><strong>Error:</strong> <%= error2 %></p>
+	            </div>
+	        <%
+	            }
+	            if (success2 != null && !success2.isEmpty()) {
+	        %>
+	        	<div class="success-message">
+	                <p><strong>Success:</strong> <%= success2 %></p>
 	            </div>
 	        <%
 	            }
@@ -153,17 +178,17 @@
 	    <div class="form">
 	    <h2>Modify Flight Info</h2>
 	    <form action="handleModInfo.jsp" method="POST">
-			Flight number: <input type="text" name="flight_num" /> <br />
-			Aircraft ID: <input type="text" name="craft_id" /> <br />
-			Airline ID: <input type="text" name="line_id" /> <br />
-			Departure Airport: <input type="text" name="dep_airport" /> <br />
-			Arrival Airport: <input type="text" name="arr_airport" /> <br />
+			Flight number: <input type="text" name="flight_num" required/> <br />
+			Aircraft ID: <input type="text" name="craft_id" required/> <br />
+			Airline ID: <input type="text" name="line_id" required/> <br />
+			Departure Airport: <input type="text" name="dep_airport" required/> <br />
+			Arrival Airport: <input type="text" name="arr_airport" required/> <br />
 			Price: <input type="text" name="price" /> <br />
-			Departure Date: <input type="datetime-local" name="dep_date" /> <br />
-			Arrival Date: <input type="datetime-local" name="arr_date" /> <br />
+			Departure: <input type="datetime-local" name="dep_date" /> <br />
+			Arrival: <input type="datetime-local" name="arr_date" /> <br />
 			Domestic: 
 			<label>
-			    <input type="radio" name="is_domestic" value="Yes" /> Yes
+			    <input type="radio" name="is_domestic" value="Yes" required/> Yes
 			</label>
 			<label>
 			    <input type="radio" name="is_domestic" value="No" /> No
@@ -171,28 +196,36 @@
 	
 	        <p>I would like to:</p>
 	        <label>
-	            <input type="radio" name="mod" value="add" /> Add Flight<br />
+	            <input type="radio" name="modFlight" value="add" required/> Add Flight<br />
 	        </label>
 	        <label>
-	            <input type="radio" name="mod" value="remove" /> Remove Flight <br />
+	            <input type="radio" name="modFlight" value="remove" /> Remove Flight <br />
 	        </label>
 	        <label>
-	            <input type="radio" name="mod" value="update" /> Update Flight Info <br />
+	            <input type="radio" name="modFlight" value="update" /> Update Flight Info <br />
 	        </label>
 	        <p>
-	            <input type="submit" value="Execute modification" /> <br />
+	            <input type="submit" name = "flight" value="Execute modification" /> <br />
 	        </p>
 	    </form>
-	    <%
-	        String e = (String) request.getAttribute("modErrorMessage");
-	        if (e != null && !e.isEmpty()) {
-	    %>
-	        <div class="error-message">
-	            <p><strong>Error:</strong> <%= e %></p>
-	        </div>
-	    <%
-	        }
-	    %>
+	        <%
+	        	String success3 = (String) request.getAttribute("successFlight");
+	            String error3 = (String) request.getAttribute("errorFlight");
+	            if (error3 != null && !error3.isEmpty()) {
+	        %>
+	            <div class="error-message">
+	                <p><strong>Error:</strong> <%= error %></p>
+	            </div>
+	        <%
+	            }
+	            if (success3 != null && !success3.isEmpty()) {
+	        %>
+	        	<div class="success-message">
+	                <p><strong>Success:</strong> <%= success3 %></p>
+	            </div>
+	        <%
+	            }
+	        %>
 	    </div>
 	    
     </div>

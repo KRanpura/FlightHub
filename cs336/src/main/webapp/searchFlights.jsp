@@ -35,9 +35,7 @@
 			<p>
 			    <input type="submit" value="Submit"> <br/>
 			</p>
-        </form>
-        <a href="signup.jsp">Don't have an account? Sign up!</a>
-        
+        </form>        
     </div>
 </body>
 </html>
