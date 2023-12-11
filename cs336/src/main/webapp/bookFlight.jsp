@@ -32,6 +32,11 @@
                         <input type="hidden" name="flight_number" value="<%= flightNumber %>">
                         <input type="submit" value="Confirm Booking">
                     </form>
+
+                    <form action="waitingList.jsp" method="POST">                                                            //  reserveFlight.jsp form 
+                        <input type="hidden" name="flight_number" value="<%= flightNumber %>">
+                        <input type="submit" value="Add To Waiting List">
+                    </form>
 <%
                 }
             }
