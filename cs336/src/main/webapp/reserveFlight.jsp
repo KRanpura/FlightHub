@@ -15,11 +15,11 @@
             pstmt.setInt(1, flightNumber);
             try (ResultSet ticketResult = pstmt.executeQuery()){
                 if (ticketResult.next()){
-                    int availableTickets = ticketResult.getInt("avaiable_tickets");
+                    int availableTickets = ticketResult.getInt("available_tickets");
                     if (availableTickets > 0){
                         String buyTicketQuery = "INSERT INTO Ticket(user_id, fare, class, purchase_date_time, booking_fee) VALUES (?, ?, ?, NOW(), ?)"; 
                         try(PreparedStatement buyTicketStmt = con.prepareStatement(buyTicketQuery, Statement.RETURN_GENERATED_KEYS)){
-                            int userId = ((User) session.getAttribute("user").getId();                                                                            // to retrieve id attribute from user in session
+                            int userId = ((User) session.getAttribute("user")).getId();                                                                            // to retrieve id attribute from user in session
                             float fare = Float.parseFloat(request.getParameter("fare"));
                             String ticketClass = request.getParameter("ticket_class");
                             float bookingFee = Float.parseFloat(request.getParameter("booking_fee"));
