@@ -13,20 +13,16 @@
         try {
             // Establish the database connection
             try (Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411")) {
-                String query = "SELECT t.id AS ticket_id,
-                                f.flight_number,
-                                d.name AS departure_airport,
-                                f.departure_date_time,
-                                a.name AS arrival_airport,
-                                f.arrival_date_time,
-                                ti.purchase_date_time
-                                FROM Ticket t
-                                JOIN TicketForFlight tf ON t.id = tf.ticket_id
-                                JOIN Flight f ON tf.flight_number = f.flight_number
-                                JOIN Airport d ON f.departure_airport = d.id
-                                JOIN Airport a ON f.arrival_airport = a.id
-                                JOIN Ticket ti ON t.id = ti.id
-                                WHERE t.user_id = ?"; 
+            	String query = "SELECT t.id AS ticket_id, f.flight_number, d.name AS departure_airport, " +
+                        "f.departure_date_time, a.name AS arrival_airport, " +
+                        "f.arrival_date_time, ti.purchase_date_time " +
+                        "FROM Ticket t " +
+                        "JOIN TicketForFlight tf ON t.id = tf.ticket_id " +
+                        "JOIN Flight f ON tf.flight_number = f.flight_number " +
+                        "JOIN Airport d ON f.departure_airport = d.id " +
+                        "JOIN Airport a ON f.arrival_airport = a.id " +
+                        "JOIN Ticket ti ON t.id = ti.id " +
+                        "WHERE t.user_id = ?";
                 // Create a PreparedStatement
                 try (PreparedStatement stmt = con.prepareStatement(query)){
                     stmt.setInt(1, userId);

@@ -19,12 +19,13 @@
                     if (availableTickets > 0){
                         String buyTicketQuery = "INSERT INTO Ticket(user_id, fare, class, purchase_date_time, booking_fee) VALUES (?, ?, ?, NOW(), ?)"; 
                         try(PreparedStatement buyTicketStmt = con.prepareStatement(buyTicketQuery, Statement.RETURN_GENERATED_KEYS)){
-                            int userId = ((User) session.getAttribute("user")).getId();                                                                            // to retrieve id attribute from user in session
+                        	String username = (String) session.getAttribute("user");
+                            int user_id = (int) (session.getAttribute("user_id"));                                                                            // to retrieve id attribute from user in session
                             float fare = Float.parseFloat(request.getParameter("fare"));
                             String ticketClass = request.getParameter("ticket_class");
                             float bookingFee = Float.parseFloat(request.getParameter("booking_fee"));
 
-                            buyTicketStmt.setInt(1, userId);
+                            buyTicketStmt.setInt(1, user_id);
                             buyTicketStmt.setFloat(2, fare);
                             buyTicketStmt.setString(3, ticketClass);
                             buyTicketStmt.setFloat(4, bookingFee);
@@ -38,7 +39,8 @@
                             }
                         }
                     }
-                    else{
+                    else
+                    {
                         String addToWaitlistQuery = "INSERT INTO WaitingList (id, added_date_time) VALUES (?, NOW())";
                         try (PreparedStatement addToWaitlistStmt = con.prepareStatement(addToWaitlistQuery)){
                             addToWaitlistStmt.setInt(1, flightNumber);
@@ -58,73 +60,5 @@
       e.printStackTrace();
     }
 %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Reserve Flight</title>
-    <style>
-        body {
-            padding: 20px;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-
-        nav a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .error-message {
-            color: red;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px auto;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        button {
-            padding: 5px 10px;
-            background-color: #ff0000;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <nav>
-        <h2 style="color: white;">View Flight Status</h2>
-        <a href="homepage.jsp">Homepage</a>
-        <a href="logout.jsp">Log out</a>
-    </nav>
-
-// rest of HTML format
-
 </body>
 </html>

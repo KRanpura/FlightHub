@@ -11,7 +11,9 @@
 	        "' and role='" + role + "'");
 	if (rs.next()) 
 	{
+		session.setAttribute("email", email);
 		session.setAttribute("user", rs.getNString("username"));
+		session.setAttribute("user_id", rs.getInt("id"));
 		session.setAttribute("role", role);
 		response.sendRedirect("homepage.jsp");
 	} 
