@@ -50,23 +50,22 @@
         <a href="logout.jsp">Log out</a>
     </nav>
     <div>
-        <form action="checkFlights.jsp" method="POST">
-            Departing Airport: <input type="text" name="departing-airport" required/> <br/>
-            Departing Date: <input type="text" name="departing-date" placeholder="YY-MM-DD" required/> <br/>
-            Arriving Airport: <input type="text" name="arriving-airport" required/> <br/>
-            Arrival Date: <input type="text" name="arrival-date" placeholder="YY-MM-DD" required/> <br/>
-			Flexibility:
-			<label>
-        		<input type="radio" name="flexibility" value="exact"> Exact dates <br/>
-    		</label>
-
-    		<label>
-        		<input type="radio" name="flexibility" value="flexible"> +/- 3 days <br/>
-    		</label>
-            <p>
-                <input type="submit" value="Submit">
-            </p>
-        </form>
+		<form action="checkFlights.jsp" method="POST">
+		    Departing Airport: <input type="text" name="departing-airport" required/> <br/>
+		    Departing Date: <input type="date" name="departing-date" required/> <br/>
+		    Arriving Airport: <input type="text" name="arriving-airport" required/> <br/>
+		    Arrival Date: <input type="date" name="arrival-date" required/> <br/>
+		    Flexibility:
+		    <label>
+		        <input type="radio" name="flexibility" required value="exact"> Exact dates <br/>
+		    </label>
+		    <label>
+		        <input type="radio" name="flexibility" value="flexible"> +/- 3 days <br/>
+		    </label>
+		    <p>
+		        <input type="submit" value="Submit">
+		    </p>
+		</form>
     </div>
 </body>
 </html>

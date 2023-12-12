@@ -147,6 +147,59 @@
 		}
 		
 	}
+	if (request.getParameter("airlineInAirport") != null)
+	{
+		boolean error = false; 
+		
+		String airline = request.getParameter("airline_id");
+		String airport = request.getParameter("airport_id");
+		String mod = request.getParameter("modLinePort");
+		
+		String query = "SELECT * FROM airlineinairport WHERE airline_id=? AND airport_id=?";
+	    PreparedStatement t = con.prepareStatement(query);
+	    t.setString(1, airline);
+	    t.setString(2, airport);
+	    ResultSet result = t.executeQuery();
+	    
+		if (mod.equals("add"))
+		{
+		    if (result.next()) 
+		    {
+		    	error = true;
+		        request.setAttribute("errorLinePort", "Cannot execute insertion, airline already exists in this airport.");
+		        request.getRequestDispatcher("modInfo.jsp").forward(request, response);
+		    }
+		    else
+		    {
+		        String insert = "INSERT INTO airlineinairport (airline_id, airport_id) VALUES (?, ?)";
+		        PreparedStatement pst = con.prepareStatement(insert);
+		        pst.setString(1, airline);
+		        pst.setString(2, airport);
+		        pst.executeUpdate();
+		        request.setAttribute("successLinePort", "Inserted!");
+		        request.getRequestDispatcher("modInfo.jsp").forward(request, response);
+		    }
+		}   
+		else if (mod.equals("remove"))
+		{
+			if (result.next())
+			{
+				String delete = "DELETE FROM airlineinairport WHERE airline_id= ? AND airport_id=?";
+		        PreparedStatement pst = con.prepareStatement(delete);
+		        pst.setString(1, airline);
+		        pst.setString(2, airport);
+		        pst.executeUpdate();
+		        request.setAttribute("successLinePort", "Removed!");
+		        request.getRequestDispatcher("modInfo.jsp").forward(request, response);
+			}
+			else
+			{
+				error = true;
+		        request.setAttribute("errorLinePort", "Cannot execute deletion, airline does not exist at this airport.");
+		        request.getRequestDispatcher("modInfo.jsp").forward(request, response);
+			}
+		}
+	}
 	if (request.getParameter("aircraft") != null)
 	{
 		boolean error = false; 
@@ -258,25 +311,26 @@
 		LocalDateTime depDateTime = LocalDateTime.parse(depDateString, formatter);
 		LocalDateTime arrDateTime = LocalDateTime.parse(arrDateString, formatter);
 		
-		boolean isDomestic = Boolean.parseBoolean(request.getParameter("is_domestic"));
+		String isDomesticString = request.getParameter("is_domestic");
+		boolean isDomestic = "Yes".equalsIgnoreCase(isDomesticString);
 		
 		String mod = request.getParameter("modFlight");
 		if (mod.equals("add"))
 		{
 			try {
-			     String query = "INSERT INTO flight (flight_number, aircraft_id, airline_id, departure_airport, arrival_airport, price, departure_date_time, arrival_date_time, is_domestic) " +
-	                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				String query = "INSERT INTO flight (flight_number, aircraft_id, airline_id, departure_airport_id, arrival_airport_id, price, departure_date_time, arrival_date_time, is_domestic) " +
+			               "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	      		 PreparedStatement pst = con.prepareStatement(query);
-	      		 pst.setInt(1, flight_num);
-	             pst.setInt(2, craft_id);
-	      		 pst.setString(3, airline);
-	      		 pst.setString(4, dep_airport);
-	      		 pst.setString(5, arr_airport);
-	      		 pst.setFloat(6, price);
-	     		 pst.setObject(7, depDateTime);
-	     		 pst.setObject(8, arrDateTime);
-	     		 pst.setBoolean(9, isDomestic);
+				PreparedStatement pst = con.prepareStatement(query);
+				pst.setInt(1, flight_num);
+				pst.setInt(2, craft_id);
+				pst.setString(3, airline);
+				pst.setString(4, dep_airport);
+				pst.setString(5, arr_airport);
+				pst.setFloat(6, price);
+				pst.setObject(7, depDateTime);
+				pst.setObject(8, arrDateTime);
+				pst.setBoolean(9, isDomestic);
 	    		 pst.executeUpdate();
 	    		 request.setAttribute("successFlight", "Inserted!");
 			     request.getRequestDispatcher("modInfo.jsp").forward(request, response);

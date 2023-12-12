@@ -49,6 +49,7 @@
     %>
         <nav>
             <a href="searchFlights.jsp">Search Flights</a>
+            <a href="myBookings.jsp">View My Bookings</a>
             <a href="forum.jsp">Q&A Forum</a>
             <a href="logout.jsp">Log out</a>
         </nav>

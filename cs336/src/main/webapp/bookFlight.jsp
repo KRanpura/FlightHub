@@ -4,8 +4,46 @@
 <html>
 <head>
     <title>Book Flight</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+        }
+
+        nav a {
+            color: #f2f2f2;
+            text-decoration: none;
+            padding: 14px 16px;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
 </head>
 <body>
+
+	<nav>
+	    <h2>Confirm Flight Booking</h2>
+	    <a href= "searchFlights.jsp">Return to Search Flights</a>
+	    <a href="homepage.jsp">Homepage</a>
+	    <a href="logout.jsp">Log out</a>
+	</nav>
 <%
     int flightNumber = Integer.parseInt(request.getParameter("flight_number"));                                                // Extract flightNumber parameter from request
     
@@ -18,7 +56,7 @@
             try (ResultSet resultSet = pstmt.executeQuery()){
                 if (resultSet.next()) {                                                                                        // display booking details
 %>
-                    <h2>Booking Detials for Flight Number: <%= flightNumber %></h2>
+                    <h2>Booking Details for Flight Number: <%= flightNumber %></h2>
                     <p>Aircraft ID: <%= resultSet.getInt("aircraft_id") %></p>
                     <p>Airline ID: <%= resultSet.getString("airline_id") %></p>
                     <p>Departure Airport: <%= resultSet.getString("departure_airport_id") %></p>
@@ -28,7 +66,7 @@
                     <p>Arrival Date/Time: <%= resultSet.getTimestamp("arrival_date_time") %></p>
                     <p>Is Domestic: <%= resultSet.getBoolean("is_domestic") %></p>
 
-                    <form action="reserveFlight.jsp" method="POST">                                                            //  reserveFlight.jsp form 
+                    <form action="reserveFlight.jsp" method="POST">                                                             
                         <input type="hidden" name="flight_number" value="<%= flightNumber %>">
                         <input type="submit" value="Confirm Booking">
                     </form>

@@ -132,6 +132,42 @@
 	        %>
 	        
 	    </div>
+	    
+    	<div class="form">
+	        <h2>Modify Airline in Airport Info</h2>
+	        <form action="handleModInfo.jsp" method="POST">
+	            Airport ID: <input type="text" name="airport_id" required/> <br />
+	            Airline ID: <input type="text" name="airline_id" required/> <br />
+	            <p>I would like to:</p>
+	            <label>
+	                <input type="radio" name="modLinePort" value="add" required/> Add Airline to Airport<br />
+	            </label>
+	            <label>
+	                <input type="radio" name="modLinePort" value="remove" /> Remove Airline From Airport <br />
+	            </label>
+	            <p>
+	                <input type="submit" name = "airlineInAirport" value="Execute modification" /> <br />
+	            </p>
+	        </form>
+	        <%
+	        	String succ = (String) request.getAttribute("successLinePort");
+	            String err= (String) request.getAttribute("errorLinePort");
+	            if (err != null && !err.isEmpty()) {
+	        %>
+	            <div class="error-message">
+	                <p><strong>Error:</strong> <%= err %></p>
+	            </div>
+	        <%
+	            }
+	            if (succ != null && !succ.isEmpty()) {
+	        %>
+	        	<div class="success-message">
+	                <p><strong>Success:</strong> <%= succ %></p>
+	            </div>
+	        <%
+	            }
+	        %>
+	    </div>
 	
 	    <div class="form">
 	        <h2>Modify Aircraft Info</h2>
