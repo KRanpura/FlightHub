@@ -134,11 +134,12 @@
             <th>Departure Date</th>
             <th>Arrival Airport</th>
             <th>Arrival Date</th>
-            <th>Purchase Date</th>        
+            <th>Purchase Date</th>
+            <th>Action</th>
         </tr>
         <% if (reservationsList.isEmpty()) { %>
             <tr>
-                <td colspan="5">No reservations found.</td>
+                <td colspan="6">No reservations found.</td>
             </tr>
         <% } else { %>
             <% for (Map<String, String> reservation : reservationsList) { %>
@@ -150,6 +151,12 @@
                     <td><%= reservation.get("arrival_airport") %></td>
                     <td><%= reservation.get("arrival_date_time") %></td>
                     <td><%= reservation.get("purchase_date_time") %></td>
+                    <td>
+                        <form method="POST" action="cancelFlight.jsp">
+                            <input type="hidden" name="ticket_id" value="<%= reservation.get("ticket_id") %>">
+                            <button type="submit">Cancel</button>
+                        </form>
+                    </td>
                 </tr>
             <% } %>
         <% } %>
