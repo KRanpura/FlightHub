@@ -68,8 +68,11 @@
              <nav>
      	        <a href="modInfo.jsp">Modify Site Info</a>
      	        <a href="viewUsers.jsp"> View FlightHub Accounts</a>
-            	<a href="reservations.jsp"> View Reservations</a>
-                <a href="revenue.jsp"> View Revenue</a>
+            	<a href="reservationsSelect.jsp"> View Reservations</a>
+                <a href="flightAirlineCustomerSelect.jsp"> View Revenue</a>
+                <a href="selectMonth.jsp"> Monthly Sales</a>
+                <a href="largestCustomer.jsp"> Highest Revenue Customer</a>
+                <a href="busiestFlight.jsp"> Five Busiest Flights</a>
             	<a href="logout.jsp">Log out</a>
         	</nav>
         

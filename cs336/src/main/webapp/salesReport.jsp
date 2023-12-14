@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Revenue From Selected Source</title>
+    <title>Monthly Sales Report</title>
     <style>
        body {
             margin: 0;
@@ -56,62 +56,48 @@
 <body>
 
 <nav>
-    <h2>Revenue From Selected Source</h2>
-    <a href= "flightAirlineCustomerSelect.jsp">Return to Select Revenue Source</a>
+    <h2>Monthly Sales Report</h2>
+    <a href= "selectMonth.jsp">Return to Select Month</a>
     <a href="homepage.jsp">Homepage</a>
     <a href="logout.jsp">Log out</a>
 </nav>
 
-<%
+<% 
     try {
         Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");
 
-        String flight = request.getParameter("flight-number");
-        String airline = request.getParameter("airline-id");
-        String customer = request.getParameter("customer-id");
+        String salesMonthStr = request.getParameter("sales-month");
+        Date salesDate = Date.valueOf(salesMonthStr);
 
-        String query;
-        if (flight != null) {
-            query = "SELECT SUM(booking_fee) AS total_booking_fee FROM ticket WHERE flight_num = ?";
-        } else if (airline != null) {
-            // Ensure that the join condition is correctly specified in your query
-            query = "SELECT SUM(booking_fee) AS total_booking_fee FROM ticket LEFT JOIN flight ON ticket.flight_num = flight.flight_number WHERE airline_id = ?";
-        } else {
-            query = "SELECT SUM(booking_fee) AS total_booking_fee FROM ticket WHERE user_id = ?";
-        }
+        String query = "SELECT SUM(fare) AS total_sales FROM ticket WHERE MONTH(purchased) = ? AND YEAR(purchased) = ?";
 
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
-            if (flight != null) {
-                pstmt.setString(1, flight);
-            } else if (airline != null) {
-                pstmt.setString(1, airline);
-            } else {
-                pstmt.setString(1, customer);
-            }
+            pstmt.setInt(1, salesDate.getMonth() + 1); // Adding 1 to match SQL's month numbering
+            pstmt.setInt(2, salesDate.getYear() + 1900); // Adding 1900 to match SQL's year representation
 
             try (ResultSet resultSet = pstmt.executeQuery()) {
 %>
                 <table>
                     <thead>
                         <tr>
-                            <th>Total Revenue</th>
+                        	<th>Month Number</th>
+                            <th>Total Sales</th> 
                         </tr>
                     </thead>
                     <tbody>
 <%
                 while (resultSet.next()) {
 %>
-                    <tr>
-                        <td><%= resultSet.getFloat("total_booking_fee") %></td>
-                    </tr>
+                        <tr>
+                        	<td><%= salesDate.getMonth()+1 %></td>
+                            <td><%= resultSet.getFloat("total_sales") %></td>
+                        </tr>
 <%
-                }
+                }}}
 %>
                     </tbody>
                 </table>
-<%
-            }
-        }
+<%	
     } catch (SQLException e) {
         e.printStackTrace();
     }

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Revenue From Selected Source</title>
+    <title>Highest Revenue Customer</title>
     <style>
        body {
             margin: 0;
@@ -56,8 +56,7 @@
 <body>
 
 <nav>
-    <h2>Revenue From Selected Source</h2>
-    <a href= "flightAirlineCustomerSelect.jsp">Return to Select Revenue Source</a>
+    <h2>Highest Revenue Customer</h2>
     <a href="homepage.jsp">Homepage</a>
     <a href="logout.jsp">Log out</a>
 </nav>
@@ -66,34 +65,23 @@
     try {
         Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");
 
-        String flight = request.getParameter("flight-number");
-        String airline = request.getParameter("airline-id");
-        String customer = request.getParameter("customer-id");
-
-        String query;
-        if (flight != null) {
-            query = "SELECT SUM(booking_fee) AS total_booking_fee FROM ticket WHERE flight_num = ?";
-        } else if (airline != null) {
-            // Ensure that the join condition is correctly specified in your query
-            query = "SELECT SUM(booking_fee) AS total_booking_fee FROM ticket LEFT JOIN flight ON ticket.flight_num = flight.flight_number WHERE airline_id = ?";
-        } else {
-            query = "SELECT SUM(booking_fee) AS total_booking_fee FROM ticket WHERE user_id = ?";
-        }
+        String query = "SELECT u.username, u.firstName, u.lastName, u.email, SUM(t.booking_fee) AS total_booking_fee " +
+                       "FROM user u " +
+                       "JOIN ticket t ON u.id = t.user_id " +
+                       "GROUP BY u.username, u.firstName, u.lastName, u.email " +
+                       "ORDER BY total_booking_fee DESC " +
+                       "LIMIT 1";
 
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
-            if (flight != null) {
-                pstmt.setString(1, flight);
-            } else if (airline != null) {
-                pstmt.setString(1, airline);
-            } else {
-                pstmt.setString(1, customer);
-            }
-
             try (ResultSet resultSet = pstmt.executeQuery()) {
 %>
                 <table>
                     <thead>
                         <tr>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
                             <th>Total Revenue</th>
                         </tr>
                     </thead>
@@ -102,6 +90,10 @@
                 while (resultSet.next()) {
 %>
                     <tr>
+                        <td><%= resultSet.getString("username") %></td>
+                        <td><%= resultSet.getString("firstName") %></td>
+                        <td><%= resultSet.getString("lastName") %></td>
+                        <td><%= resultSet.getString("email") %></td>
                         <td><%= resultSet.getFloat("total_booking_fee") %></td>
                     </tr>
 <%
