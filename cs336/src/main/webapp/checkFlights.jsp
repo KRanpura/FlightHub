@@ -65,7 +65,7 @@
 <%
     // Establish a database connection
     try {
-        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");
+        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
 
         String dep = request.getParameter("departing-airport");
         String arr = request.getParameter("arriving-airport");
@@ -123,7 +123,7 @@
                         <td><%= resultSet.getFloat("price") %></td>
                         <td><%= resultSet.getTimestamp("departure_date_time") %></td>
                         <td><%= resultSet.getTimestamp("arrival_date_time") %></td>
-                        <td><a href="bookFlight.jsp?flight_number=<%= resultSet.getInt("flight_number") %>">Book</a></td>
+                        <td><a href="bookFlight.jsp?flight_number=<%= resultSet.getInt("flight_number") %>&selectedUser=<%= request.getParameter("selectedUser")%>">Book</a></td>
                     </tr>
 <%
                 }

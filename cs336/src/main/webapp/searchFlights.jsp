@@ -1,5 +1,44 @@
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%
+List<Map<String, String>> usersList = new ArrayList<>();
+
+try {
+    // Establish the database connection
+    try (Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#")) {
+        String query = "SELECT * FROM user WHERE role = 'customer'";
+
+        // Create a PreparedStatement
+        try (PreparedStatement stmt = con.prepareStatement(query);
+                ResultSet result = stmt.executeQuery()) {
+
+            // Process the ResultSet
+            while (result.next()) {
+                Map<String, String> user = new HashMap<>();
+                user.put("id", String.valueOf(result.getInt("id")));
+                user.put("username", result.getString("username"));
+                user.put("firstName", result.getString("firstName"));
+                user.put("lastName", result.getString("lastName"));
+                user.put("email", result.getString("email"));
+                user.put("role", result.getString("role"));
+                user.put("phone", result.getString("phone"));
+                usersList.add(user);
+            }
+        }
+    }
+} catch (SQLException e) {
+    // Handle SQLException (log or display an error message)
+    e.printStackTrace();
+} 
+
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +90,12 @@
     </nav>
     <div>
 		<form action="checkFlights.jsp" method="POST">
+            <label>Select User:</label>
+            <select name="selectedUser">
+                <% for (Map<String, String> user : usersList) { %>
+                    <option value="<%= user.get("id") %>"><%= user.get("username") %></option>
+                <% } %>
+            </select>
 		    Departing Airport: <input type="text" name="departing-airport" required/> <br/>
 		    Departing Date: <input type="date" name="departing-date" required/> <br/>
 		    Arriving Airport: <input type="text" name="arriving-airport" required/> <br/>

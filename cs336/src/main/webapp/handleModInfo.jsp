@@ -1,7 +1,7 @@
 <%@ page import ="java.sql.*, java.time.LocalDateTime, java.time.format.DateTimeFormatter" %>
 <%
 
-	Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project","root", "khushi@2411");
+	Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project","root", "Devanshi#");
 	Statement st = con.createStatement();
 	ResultSet rs;
 	

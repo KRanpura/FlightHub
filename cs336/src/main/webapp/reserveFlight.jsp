@@ -48,7 +48,7 @@
 <%
     int flightNumber = Integer.parseInt(request.getParameter("flight_number"));
     try {                                                                                                                                                                          // Establish a database connection
-        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");  
+        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");  
         String checkForTicketsQuery = "SELECT COUNT(*) AS tickets_sold FROM ticket WHERE flight_num = ? AND ticket_id NOT IN (SELECT id FROM Waitinglist)";     
         String capacityQuery = "SELECT aircraft.capacity " +
                 "FROM flight " +
@@ -67,11 +67,19 @@
                             if (capacityResult.next()){
                                 int capacity = capacityResult.getInt("capacity");
                                 int available_tickets = capacity - tickets_sold;
+                                int user_id = -1;
 
                                 if (available_tickets > 0) {
                                     String buyTicketQuery = "INSERT INTO Ticket(ticket_id, flight_num, user_id, fare, class, purchased, booking_fee) VALUES (DEFAULT, ?, ?, ?, ?, NOW(), ?)";
                                     try (PreparedStatement buyTicketStmt = con.prepareStatement(buyTicketQuery, Statement.RETURN_GENERATED_KEYS)){
-                                        int user_id = (int) (session.getAttribute("user_id"));                                                                            // to retrieve id attribute from user in session
+                                        if (!session.getAttribute("role").equals("rep"))
+                                        {
+                                            user_id = (int) (session.getAttribute("user_id"));                                                                            // to retrieve id attribute from user in session
+                                        }    
+                                        else
+                                        {
+                                            user_id = Integer.parseInt(request.getParameter("selectedUser"));
+                                        }
                                         float fare = Float.parseFloat(request.getParameter("fare"));
                                         String ticketClass = request.getParameter("class");
                                         float bookingFee = Float.parseFloat(request.getParameter("booking_fee"));
@@ -83,14 +91,21 @@
 
                                         int rowChanged =  buyTicketStmt.executeUpdate();
                                         if (rowChanged > 0){
-                                            response.sendRedirect("myBookings.jsp");
+                                            response.sendRedirect("myBookings.jsp?selectedUser=" + user_id);
                                         }
                                     }
                                 }  else {
                                     // Your existing code for purchasing a ticket
                                     String buyTicketQuery = "INSERT INTO Ticket(user_id, fare, class, purchased, booking_fee) VALUES (?, ?, ?, NOW(), 0)";
                                     try (PreparedStatement buyTicketStmt = con.prepareStatement(buyTicketQuery, Statement.RETURN_GENERATED_KEYS)) {
-                                        int user_id = (int) (session.getAttribute("user_id")); // to retrieve id attribute from user in session
+                                        if (!session.getAttribute("role").equals("rep"))
+                                        {
+                                            user_id = (int) (session.getAttribute("user_id"));                                                                            // to retrieve id attribute from user in session
+                                        }    
+                                        else
+                                        {
+                                            user_id = Integer.parseInt(request.getParameter("selectedUser"));
+                                        }
                                         float fare = Float.parseFloat(request.getParameter("fare"));
                                         String ticketClass = request.getParameter("class");
                                        // float bookingFee = Float.parseFloat(request.getParameter("booking_fee"));

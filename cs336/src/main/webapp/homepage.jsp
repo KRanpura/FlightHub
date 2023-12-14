@@ -60,6 +60,7 @@
             <a href="searchFlights.jsp">Search Flights</a>
             <a href="forum.jsp">Answer User Questions</a>
             <a href="logout.jsp">Log out</a>
+            <a href="searchFlights.jsp">Make User Reservations</a>
         </nav>
 
         <%

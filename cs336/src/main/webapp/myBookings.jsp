@@ -73,7 +73,40 @@
 <body>
 
     <nav>
-        <% String username = (String) session.getAttribute("user"); %>
+        <%int user_id = -1;
+        String username = null;
+        if (!session.getAttribute("role").equals("rep"))
+        {
+            user_id = (int) (session.getAttribute("user_id"));
+        }    
+        else
+        {
+            user_id = Integer.parseInt(request.getParameter("selectedUser"));
+        } 
+        
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
+
+            String query = "SELECT * FROM user WHERE id = ?";
+            try (PreparedStatement users = con.prepareStatement(query)) {
+                users.setInt(1, user_id);
+
+                try (ResultSet resultquery = users.executeQuery())
+                {
+                    while(resultquery.next())
+                    {
+                        username = resultquery.getString("username");
+                    }
+                }
+                
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }%>
+        <%if(!session.getAttribute("role").equals("rep"))
+        {
+            username = (String) session.getAttribute("user");
+        }%>
         <h2>Bookings for <%=username %></h2>
         <a href="searchFlights.jsp">Search Flights</a>
         <a href="homepage.jsp">Homepage</a>
@@ -82,11 +115,10 @@
 
     <div class="bookings-container">
         <%
-            int user_id = (int) session.getAttribute("user_id");
             String successParam = request.getParameter("success");
             String reasonParam = request.getParameter("reason");
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");
+                Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
 
                 // Fetch ticket information for the logged-in user
                 String ticketQuery = "SELECT * FROM ticket WHERE user_id = ?";
@@ -146,6 +178,7 @@
 
                                                             <input type="hidden" name="ticket_id" value="<%= ticketId %>">
                                                             <input type="submit" class="cancel-btn" value="Cancel Booking">
+                                                            <input type="hidden" name="selectedUser" value="<%= user_id %>">
                                                         </form>
                                                     </div>
                                                     <%
