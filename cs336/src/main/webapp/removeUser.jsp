@@ -7,7 +7,7 @@
     if (userId != null && !userId.isEmpty()) {
         try {
             // Establish the database connection
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411")) {
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#")) {
 
                 // Prepare the SQL statement to delete the user
                 String query = "DELETE FROM user WHERE id = ?";

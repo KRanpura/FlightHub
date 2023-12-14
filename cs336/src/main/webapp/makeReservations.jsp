@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Book Flight</title>
+    <title>Make User Reservatinost</title>
     <style>
         body {
             margin: 0;
@@ -46,10 +46,9 @@
     </nav>
     <%
         int flightNumber = Integer.parseInt(request.getParameter("flight_number"));                                                // Extract flightNumber parameter from request
-        int selectedUser = Integer.parseInt(request.getParameter("selectedUser")); 
         
         try {                                                                                                                      // Establish a database connection
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Jayjalaram1506");
        
             String query = "SELECT * FROM flight WHERE flight_number = ?";                                                         // SQL query retrieve flight info using flightNumber 
             try (PreparedStatement pstmt = con.prepareStatement(query)){
@@ -89,7 +88,6 @@
                         
                             <input type="hidden" name="flight_number" value="<%= flightNumber %>">
                             <input type="hidden" name="booking_fee" value="25.00">
-                            <input type="hidden" name="selectedUser" value="<%= selectedUser %>">
                             <input type="submit" value="Confirm Booking">
                         </form>
     <%

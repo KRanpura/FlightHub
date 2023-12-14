@@ -43,7 +43,41 @@
 <body>
 
     <nav>
-        <% String username = (String) session.getAttribute("user"); %>
+        <%int user_id = -1;
+        String username = null;
+        if (!session.getAttribute("role").equals("rep"))
+        {
+            user_id = (int) (session.getAttribute("user_id"));
+        }    
+        else
+        {
+            user_id = Integer.parseInt(request.getParameter("selectedUser"));
+        } 
+        
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
+
+            String query = "SELECT * FROM user WHERE id = ?";
+            try (PreparedStatement users = con.prepareStatement(query)) {
+                users.setInt(1, user_id);
+
+                try (ResultSet resultquery = users.executeQuery())
+                {
+                    while(resultquery.next())
+                    {
+                        username = resultquery.getString("username");
+                    }
+                }
+                
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }%>
+        <%if(!session.getAttribute("role").equals("rep"))
+        {
+            username = (String) session.getAttribute("user");
+        }%>
+
         <h2>Cancel Booking for <%=username %></h2>
         <a href="searchFlights.jsp">Search Flights</a>
         <a href="homepage.jsp">Homepage</a>
@@ -55,7 +89,7 @@
         int ticketId = Integer.parseInt(request.getParameter("ticket_id"));
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
 
             // Check if the ticket with the specified ticket_id has class "bus" or "first"
             String checkClassQuery = "SELECT class FROM ticket WHERE ticket_id = ?";
@@ -76,9 +110,9 @@
                                 // Redirect to myBookings.jsp with a success or error message
                                 String redirectURL = "myBookings.jsp";
                                 if (rowsAffected > 0) {
-                                    response.sendRedirect(redirectURL + "?success=true");
+                                    response.sendRedirect(redirectURL + "?success=true&selectedUser=" + user_id);
                                 } else {
-                                    response.sendRedirect(redirectURL + "?success=false&reason=incorrectInfo");
+                                    response.sendRedirect(redirectURL + "?success=false&reason=incorrectInfo&selectedUser=" + user_id);
                                 }
                             }
                         } else {

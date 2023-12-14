@@ -12,7 +12,7 @@
         
         try {
             // Establish the database connection
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411")) {
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#")) {
             	String query = "SELECT t.id AS ticket_id, f.flight_number, d.name AS departure_airport, " +
                         "f.departure_date_time, a.name AS arrival_airport, " +
                         "f.arrival_date_time, ti.purchase_date_time " +

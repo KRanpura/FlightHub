@@ -44,7 +44,7 @@
         int postId = Integer.parseInt(postIdParam);
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
 
             // Check if the form is submitted
             if (request.getMethod().equalsIgnoreCase("post")) {

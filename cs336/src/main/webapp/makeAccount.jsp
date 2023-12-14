@@ -9,7 +9,7 @@
 	String role = request.getParameter("role");
 	
 	Class.forName("com.mysql.jdbc.Driver");
-	Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project","root", "khushi@2411");
+	Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project","root", "Devanshi#");
 	Statement st = con.createStatement();
 	ResultSet rs;
 	

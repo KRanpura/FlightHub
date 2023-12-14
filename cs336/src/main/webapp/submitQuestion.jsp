@@ -12,7 +12,7 @@
     String questionContent = request.getParameter("questionContent");
 
     try {
-        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "khushi@2411");
+        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/cs336project", "root", "Devanshi#");
         
         // Insert the new question into the ForumPosts table
         String insertQuery = "INSERT INTO ForumPosts (question) VALUES (?)";
